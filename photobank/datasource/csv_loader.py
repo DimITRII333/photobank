@@ -1,6 +1,6 @@
 import csv
 
-from photobank.factory import PhotoFactory
+from photobank.model.factory import PhotoFactory
 
 
 def load_photos(path):

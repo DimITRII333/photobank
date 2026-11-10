@@ -1,5 +1,5 @@
-from photobank.loader import load_photos
-from photobank.search import SearchCriteria, search, statistics
+from photobank.datasource.csv_loader import load_photos
+from photobank.analytics.search import SearchCriteria, search, statistics
 
 
 def main():

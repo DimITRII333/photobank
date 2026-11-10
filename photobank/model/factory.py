@@ -1,4 +1,4 @@
-from photobank.photo import Illustration, PremiumPhoto, StockPhoto
+from photobank.model.photo import Illustration, PremiumPhoto, StockPhoto
 
 
 class PhotoFactory:
