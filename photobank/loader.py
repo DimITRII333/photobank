@@ -1,22 +1,23 @@
 import csv
 
-from photobank.photo import Photo
+from photobank.photo import Illustration, PremiumPhoto, StockPhoto
 
 
 def load_photos(path):
     photos = []
     with open(path, encoding='utf-8') as f:
         for row in csv.DictReader(f):
+            common = (int(row['id']), row['title'], row['author'],
+                      row['tags'].split(';'), row['date'],
+                      float(row['size_mb']), int(row['downloads']),
+                      int(row['base_price']))
             if row['kind'] == 'illustration':
-                p = Photo(int(row['id']), row['kind'], row['title'],
-                          row['author'], row['tags'].split(';'), row['date'],
-                          float(row['size_mb']), int(row['downloads']),
-                          int(row['base_price']), fmt=row['format'])
+                p = Illustration(*common, row['format'])
+            elif row['kind'] == 'premium':
+                p = PremiumPhoto(*common, int(row['width']),
+                                 int(row['height']), row['license'])
             else:
-                p = Photo(int(row['id']), row['kind'], row['title'],
-                          row['author'], row['tags'].split(';'), row['date'],
-                          float(row['size_mb']), int(row['downloads']),
-                          int(row['base_price']), int(row['width']),
-                          int(row['height']), row['license'])
+                p = StockPhoto(*common, int(row['width']),
+                               int(row['height']))
             photos.append(p)
     return photos
