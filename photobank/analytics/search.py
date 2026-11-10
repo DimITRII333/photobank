@@ -33,13 +33,3 @@ class SearchCriteria:
 
 def search(photos, criteria):
     return [p for p in photos if criteria.matches(p)]
-
-
-def statistics(photos):
-    if not photos:
-        return {'count': 0, 'avg_price': 0, 'max_price': 0, 'downloads': 0}
-    prices = [p.get_price() for p in photos]
-    return {'count': len(photos),
-            'avg_price': sum(prices) / len(prices),
-            'max_price': max(prices),
-            'downloads': sum(p.downloads for p in photos)}
