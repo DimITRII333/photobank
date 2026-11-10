@@ -1,5 +1,10 @@
 from abc import ABC, abstractmethod
 
+PIXELS_IN_MEGAPIXEL = 1_000_000
+PREMIUM_MULTIPLIER = 2
+EXTENDED_LICENSE_MULTIPLIER = 3
+ILLUSTRATION_MULTIPLIER = 1.5
+
 
 class Photo(ABC):
     """Базовый класс для всех изображений фотобанка."""
@@ -40,7 +45,7 @@ class RasterPhoto(Photo):
         self.height = height
 
     def get_info(self):
-        mp = self.width * self.height / 1000000
+        mp = self.width * self.height / PIXELS_IN_MEGAPIXEL
         return str(round(mp, 1)) + ' Мп'
 
 
@@ -62,8 +67,8 @@ class PremiumPhoto(RasterPhoto):
 
     def get_price(self):
         if self.license == 'extended':
-            return self.base_price * 3
-        return self.base_price * 2
+            return self.base_price * EXTENDED_LICENSE_MULTIPLIER
+        return self.base_price * PREMIUM_MULTIPLIER
 
 
 class Illustration(Photo):
@@ -76,7 +81,7 @@ class Illustration(Photo):
         self.fmt = fmt
 
     def get_price(self):
-        return self.base_price * 1.5
+        return self.base_price * ILLUSTRATION_MULTIPLIER
 
     def get_info(self):
         return 'вектор, ' + self.fmt
