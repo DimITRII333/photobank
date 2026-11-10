@@ -36,15 +36,10 @@ def search(photos, criteria):
 
 
 def statistics(photos):
-    if len(photos) == 0:
+    if not photos:
         return {'count': 0, 'avg_price': 0, 'max_price': 0, 'downloads': 0}
-    s = 0
-    m = 0
-    d = 0
-    for p in photos:
-        s += p.get_price()
-        if p.get_price() > m:
-            m = p.get_price()
-        d += p.downloads
-    return {'count': len(photos), 'avg_price': s / len(photos),
-            'max_price': m, 'downloads': d}
+    prices = [p.get_price() for p in photos]
+    return {'count': len(photos),
+            'avg_price': sum(prices) / len(prices),
+            'max_price': max(prices),
+            'downloads': sum(p.downloads for p in photos)}
